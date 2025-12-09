@@ -3,8 +3,8 @@ resource "azurerm_resource_group" "rg" {
   location = "Canada Central"
 }
 
-resource "azurerm_storage_account" "sa" {
-  name                     = "Pumej"
+resource "azurerm_storage_account" "tfstate_container" {
+  name                     = "pumej"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
@@ -23,7 +23,7 @@ resource "azurerm_storage_account" "sa" {
 
 resource "azurerm_storage_container" "tfstate_container" {
   name                  = "prod-tfstate"
-  storage_account_id  = azurerm_storage_account.sa.id
+  storage_account_name  = azurerm_storage_account.tfstate_container.name
   container_access_type = "private"
 }
 
