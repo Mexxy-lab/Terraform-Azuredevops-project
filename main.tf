@@ -1,3 +1,32 @@
+resource "azurerm_resource_group" "rg" {
+  name     = "${var.prefix}-resources"
+  location = "Canada Central"
+}
+
+resource "azurerm_storage_account" "sa" {
+  name                     = "Pumej"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+
+  allow_nested_items_to_be_public = false
+
+  blob_properties {
+    versioning_enabled = true
+  }
+
+  tags = {
+    environment = "prod"
+  }
+}
+
+resource "azurerm_storage_container" "tfstate_container" {
+  name                  = "prod-tfstate"
+  storage_account_id  = azurerm_storage_account.sa.id
+  container_access_type = "private"
+}
+
 resource "azurerm_resource_group" "example" {
   name     = "${var.prefix}-rg"
   location = var.location
