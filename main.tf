@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "rg" {
   name     = "${var.prefix}-resources"
-  location = "Canada Central"
+  location = var.location
 }
 
 resource "azurerm_storage_account" "tfstate_container" {
