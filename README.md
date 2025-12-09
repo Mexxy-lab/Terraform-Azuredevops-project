@@ -1,43 +1,34 @@
-# Terraform-AzureDevOps-Sample
+## This Terraform project demonstrates how to use Terraform with Azure Devops. 
 
-### You can use the below Azure cli commands to set the terraform remote backend, or you can do it via the portal
+- In this project we would provision the infrastructure (VMs, Network Interface, Backend bucket, etc) using Terraform as IAC. 
+- Below picture shows the Terraform infrastructure set up. 
 
-``` shell
-#!/bin/bash
-## The Storage account name must be unique, and the values below should match your backend.tf
-RESOURCE_GROUP_NAME=demo-resources
-STORAGE_ACCOUNT_NAME=techtutorialswithpiyush
-CONTAINER_NAME=prod-tfstate
+![alt text](pictures/image.png)
 
-# Create resource group
-az group create --name $RESOURCE_GROUP_NAME --location canadacentral
+- Initializing the repository would download plugins/dependencies and would also create the tfstate files in the .terraform directory.
 
-# Create storage account
-az storage account create --resource-group $RESOURCE_GROUP_NAME --name $STORAGE_ACCOUNT_NAME --sku Standard_LRS --encryption-services blob
-
-# Create blob container
-az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOUNT_NAME
+```bash
+terraform init
 ```
 
-## Usage/Examples
+![alt text](pictures/image1.png)
 
-### 1) login to the CLI
-```shell
-az login --use-device-code
+- Running terraform plan, compares actual vs expected infra using the terraform.tfstate file. 
+
+```bash
+terraform plan
 ```
-### 2) set alias
-```shell
-alias tf=terraform
+
+![alt text](pictures/image2.png)
+
+- Running terraform apply, would provision your resources accordingly. Updates the tfstate file with latest infrastructure status. 
+
+```bash
+terraform apply
 ```
-### 3) initialize the providers
-```shell
-tf init
-```
-### 4) Run the plan
-```shell
-tf plan
-```
-### 5) Apply the changes
-```shell
-tf apply --auto-approve
-```
+
+![alt text](pictures/image3.png)
+
+- Implementing this with Azure Devops Pipeline, we just need to integrate these commands to the azurepipeline yaml file. See sample infra set up below: 
+
+![alt text](pictures/image4.png)
