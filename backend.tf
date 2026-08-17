@@ -1,7 +1,7 @@
 # terraform {
 #   backend "azurerm" {
 #     resource_group_name  = "pumej-resources"
-#     storage_account_name = "Pumej"
+#     storage_account_name = "pumejtfstate"
 #     container_name       = "prod-tfstate"
 #     key                  = "prod.terraform.tfstate"
 #   }
